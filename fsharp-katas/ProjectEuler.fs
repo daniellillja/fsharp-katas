@@ -14,7 +14,6 @@ module ``Project Euler`` =
         let fibsInRange max = evenFibs |> Seq.takeWhile (fun num -> num <= int(max))
         Seq.sum (fibsInRange max)
 
-
     let euler3 number =
         let possibleFactorsOf (n:int64) =
             let upperBound = int64(Math.Sqrt(double(n)))
@@ -37,3 +36,19 @@ module ``Project Euler`` =
         products
             |> Seq.filter isPalendrome
             |> Seq.max
+
+    let euler5 =
+        let factors = [1..20]
+        let isDivisibleByFactor n factor = n % factor = 0
+        let isDivisibleByFactors factors n = 
+            factors 
+                |> Seq.where (isDivisibleByFactor n)
+                |> Seq.length = Seq.length factors
+        
+        // todo: look at FSharp.Collections.ParallelSeq for performance
+
+        let maxFactor = List.max factors
+        Seq.initInfinite (fun idx -> idx + 1)
+            |> Seq.where (fun x -> isDivisibleByFactor x maxFactor)
+            |> Seq.where (fun x -> isDivisibleByFactors factors x)
+            |> Seq.take 1 |> Seq.head
