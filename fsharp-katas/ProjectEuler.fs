@@ -1,5 +1,4 @@
 ﻿namespace fsharp_katas
-//https://web.archive.org/web/20120702222856/http://fsharp-euler.wikispaces.com/
 
 module ``Project Euler`` =
     open System
@@ -20,9 +19,21 @@ module ``Project Euler`` =
         let possibleFactorsOf (n:int64) =
             let upperBound = int64(Math.Sqrt(double(n)))
             [2L..upperBound]
-        
         let findFactorsOf (n:int64) = possibleFactorsOf n |> Seq.filter (fun x -> n % x = 0L)
-
         let isPrime n = findFactorsOf n |> Seq.length = 0
 
-        findFactorsOf number |> Seq.filter isPrime |> Seq.max 
+        findFactorsOf number |> Seq.filter isPrime |> Seq.max
+
+    let euler4 =
+        let isPalendrome n =
+            let forwards = n.ToString()
+            let reverse = new string(Array.rev(forwards.ToCharArray()))
+            forwards.Equals(reverse)
+        let digitsInRange = seq {100..999}
+        // Seq.collect creates a list from each input elements and consolidates the results
+        // into one list
+        let products = Seq.collect (fun x -> digitsInRange |> Seq.map (fun y -> x * y)) digitsInRange
+
+        products
+            |> Seq.filter isPalendrome
+            |> Seq.max
