@@ -52,3 +52,11 @@ module ``Project Euler`` =
             |> Seq.where (fun x -> isDivisibleByFactor x maxFactor)
             |> Seq.where (fun x -> isDivisibleByFactors factors x)
             |> Seq.take 1 |> Seq.head
+
+    let euler6 =
+        let range = [1..100]
+
+        let square(x) = x*x
+        let sumOfSquares(nums) = nums |> List.map square |> List.sum
+        let squareOfSum(nums) = nums |> List.sum |> square
+        squareOfSum(range) - sumOfSquares(range) 
